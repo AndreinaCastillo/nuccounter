@@ -133,8 +133,8 @@ def contig_list_creator(nucleos):
         calc_out_file.write(str(nucleo['end']) + '\t')
         calc_out_file.write(str(nucleo['sequence']['AT']) + '\t')
         calc_out_file.write(str(nucleo['sequence']['GC']) + '\t')
-        calc_out_file.write(str(nucleo['sequence']['X']) + '\t')
-        calc_out_file.write(str(nucleo['sequence']['N']) + '\n')
+        calc_out_file.write(str(nucleo['sequence']['N']) + '\t')
+        calc_out_file.write(str(nucleo['sequence']['X']) + '\n')
         
     calc_out_file.close()
                 
