@@ -57,19 +57,6 @@ generator_lines_to_contigs = lines_to_contigs(fasta_line_source)
 #     print(i)
 
 
-
-###Splits sequence from a string to a tuple. Each nucleotide is separately listed on the tuple
-
-def sequence_split(contigs_iterator):
-    for contig in contigs_iterator:
-        yield {'name': contig['name'], 'sequence': tuple(contig['sequence'])}
-
-nucleotides2 = sequence_split(lines_to_contigs(fasta_line_source))
-# for i in nucleotides2:
-#     print(i)
-
-
-
 ###Groups A and T into AT, and C and G into GC. Other nucleotides (including ambiguous characters are added to their own category) 
 
 def group_nucleotides(nucleotide_seqs):
@@ -79,10 +66,9 @@ def group_nucleotides(nucleotide_seqs):
         nucleotide_groups = (nucleotide_group_map[base] for base in nucleotide_seq['sequence'])
         yield {'name': nucleotide_seq['name'], 'sequence': nucleotide_groups}
 
-nucleotides_seq = group_nucleotides(sequence_split(lines_to_contigs(fasta_line_source)))
+nucleotides_seq = group_nucleotides(lines_to_contigs(fasta_line_source))
 # for i in nucleotides_seq:
 #     print(list(islice(i['sequence'], 10)))
-
 
 
 ### Creates a sliding window (size of the window is a global variable). 
@@ -110,7 +96,7 @@ def sliding_percentages(nucleos, window_size, unique_nucleotides):
             window_percentage = {nucleotides: (counter / window_size)*100 for nucleotides, counter in counter.items()}
             yield {'name': nucleo['name'], 'sequence': window_percentage, 'start': w_start, 'end': w_end}
         
-nucleotides4 = sliding_percentages(group_nucleotides(sequence_split(lines_to_contigs(fasta_line_source))),window_size,('AT', 'GC', 'N', 'X'))
+nucleotides4 = sliding_percentages(group_nucleotides(lines_to_contigs(fasta_line_source)),window_size,('AT', 'GC', 'N', 'X'))
 # for i in nucleotides4:
 #     print(i)
 
